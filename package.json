@@ -1,0 +1,30 @@
+{
+  "name": "hapi-instrumental",
+  "version": "1.0.0",
+  "description": "Instrumental App plugin for Hapi.js",
+  "main": "./src/index.js",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "lint": "eslint src/ --ext .js",
+    "pretest": "npm run lint",
+    "test": "jest",
+    "cover": "jest --coverage",
+    "coverage": "jest --coverage --coverageReporters=text-lcov | coveralls"
+  },
+  "author": "Kevin Isom<kevin.isom@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "instrumental-agent": "^2.3.0"
+  },
+  "devDependencies": {
+    "@kev_nz/async-tools": "^1.0.1",
+    "@kev_nz/eslint-config": "^3.2.1",
+    "@kev_nz/publisher": "^3.0.1",
+    "coveralls": "^3.0.3",
+    "eslint": "5.16.0",
+    "hapi": "18.1.0",
+    "jest": "24.7.1"
+  }
+}
