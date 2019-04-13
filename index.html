@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>hapi-instrumental - Instrumental App plugin for Hapi.js - Kevin Isom</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="extend.css" />
+  <meta name="description" content="hapi-instrumental - Instrumental App plugin for Hapi.js -" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/github.min.css" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="hapi-instrumental - Instrumental App plugin for Hapi.js - - Kevin Isom" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="hapi-instrumental - Instrumental App plugin for Hapi.js -" />
+  <meta property="og:url" content="https://kevinisom.info/create" />
+  <meta property="og:image" content="https://avatars3.githubusercontent.com/u/62547?s=400&amp;v=4" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@kev_nz" />
+  <meta name="twitter:title" content="hapi-instrumental - Instrumental App plugin for Hapi.js -- Kevin Isom" />
+  <meta name="twitter:description" content="hapi-instrumental - Instrumental App plugin for Hapi.js -" />
+  <meta name="twitter:image" content="https://avatars3.githubusercontent.com/u/62547?s=400&amp;v=4" />
+
+</head>
+
+<body>
+  <div class="container">
+  <h1 id="hapi-instrumentation-plugin">Hapi Instrumentation Plugin</h1>
+<p>Instrument your <a href="https://hapijs.com/">Hapi.js</a> app with instrumental service <a href="https://instrumentalapp.com">InstrumentalApp</a></p>
+<h2 id="usage">Usage</h2>
+<h2 id="register-plugin">Register plugin</h2>
+<pre><code class="hljs javascript language-javascript"><span class="hljs-comment">// register plugin</span>
+server.register({
+  <span class="hljs-attr">register</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'hapi-instrumental'</span>),
+  <span class="hljs-attr">options</span>: {
+    <span class="hljs-attr">apiKey</span>: <span class="hljs-string">'jlsdfjklsjf2423432'</span> <span class="hljs-comment">//instrumental api key</span>
+  }
+})</code></pre>
+<h2 id="usage-1">Usage</h2>
+<p>In addition to logging responses you can both increment and use the gauge functionality (please see instrumentalapp.com docs) as you would from the agent. The plugin also provides the ability to gauge the time from the start of the request as well as gauging start and stop keys.</p>
+<pre><code class="hljs javascript language-javascript">server.route({
+  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/'</span>,
+  <span class="hljs-attr">handler</span>: <span class="hljs-function">(<span class="hljs-params">request, h</span>) =&gt;</span> {
+    request.increment(<span class="hljs-string">'web.request.home'</span>)
+    <span class="hljs-keyword">return</span>  <span class="hljs-string">'Hi There'</span>
+  }
+})
+
+<span class="hljs-comment">// with startMeasuring and endMeasuring</span>
+server.route({
+  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/slowquery'</span>,
+  <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (request, h) =&gt; {
+    request.startMeasuring(<span class="hljs-string">'api.dataquery.time'</span>)
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> getSomeData()
+    request.endMeasuring(<span class="hljs-string">'api.dataquery.time'</span>)
+    <span class="hljs-keyword">return</span> result
+  }
+})
+
+<span class="hljs-comment">// gauge from the start of the reqest</span>
+server.route({
+  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/slowquery'</span>,
+  <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (request, h) =&gt; {
+
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> getSomeData()
+    request.measure(<span class="hljs-string">'web.dataquery.time'</span>) <span class="hljs-comment">// from start</span>
+    <span class="hljs-keyword">const</span> result2 = <span class="hljs-keyword">await</span> getSomeOtherData()
+
+    <span class="hljs-keyword">return</span> { ...result, ...result2 }
+  }
+})
+<span class="hljs-comment">// using the gauge directly</span>
+server.route({
+  <span class="hljs-attr">method</span>: <span class="hljs-string">'GET'</span>,
+  <span class="hljs-attr">path</span>: <span class="hljs-string">'/slowquery'</span>,
+  <span class="hljs-attr">handler</span>: <span class="hljs-keyword">async</span> (request, h) =&gt; {
+    <span class="hljs-keyword">const</span> hrstart = process.hrtime()
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> getSomeData()
+    <span class="hljs-keyword">const</span> hrend = process.hrtime(hrstart)
+    request.gauge(
+      <span class="hljs-string">'api.dataquery.time'</span>,
+      hrend[<span class="hljs-number">1</span>] / <span class="hljs-number">1000000</span> <span class="hljs-comment">/*, time = now, count = 1 */</span>
+    )
+    <span class="hljs-keyword">return</span> result
+  }
+})</code></pre>
+  </div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-64038939-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-64038939-2');
+</script>
+
+</body>
