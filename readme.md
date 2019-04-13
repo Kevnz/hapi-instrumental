@@ -1,6 +1,6 @@
 # Hapi Instrumentation Plugin
 
-Instrument your Hapi app with instrumental service [Instrumental](https://instrumentalapp.com)
+Instrument your [Hapi.js](https://hapijs.com/) app with instrumental service [InstrumentalApp](https://instrumentalapp.com)
 
 ## Usage
 
@@ -11,7 +11,7 @@ Instrument your Hapi app with instrumental service [Instrumental](https://instru
 server.register({
   register: require('hapi-instrumental'),
   options: {
-    apiKey: 'jlsdfjklsjfs3242423432' //instrumental api key
+    apiKey: 'jlsdfjklsjf2423432' //instrumental api key
   }
 })
 ```
