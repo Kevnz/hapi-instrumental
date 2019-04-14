@@ -1,4 +1,6 @@
-# Hapi Instrumentation Plugin
+# Hapi Instrumental Plugin
+
+[![npm version](https://badge.fury.io/js/hapi-instrumental.svg)](https://badge.fury.io/js/hapi-instrumental) ![Build Status](https://img.shields.io/circleci/project/github/Kevnz/hapi-instrumental/master.svg) [![Coverage Status](https://coveralls.io/repos/github/Kevnz/hapi-instrumental/badge.svg?branch=master)](https://coveralls.io/github/Kevnz/hapi-instrumental?branch=master)
 
 Instrument your [Hapi.js](https://hapijs.com/) app with instrumental service [InstrumentalApp](https://instrumentalapp.com)
 
