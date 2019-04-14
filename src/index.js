@@ -1,7 +1,7 @@
 const agent = require('instrumental-agent')
 const pkg = require('../package.json')
 const register = (server, options) => {
-  if (!options.apiKey) {
+  if (!(options.apiKey || process.env.INSTRUMENTAL_KEY)) {
     throw new Error('The Instrumental API key is required')
   }
   agent.configure({
@@ -19,7 +19,10 @@ const register = (server, options) => {
 
   server.decorate('request', 'startMeasuring', function(key) {
     if (this.pre._starts[key]) {
-      console.warn(`The key: ${key} was already being measured`)
+      server.log(
+        ['instrumental', 'warn'],
+        `The key: ${key} was already being measured`
+      )
       delete this.pre._starts[key]
     }
     this.pre._starts[key] = process.hrtime()
@@ -27,7 +30,10 @@ const register = (server, options) => {
 
   server.decorate('request', 'endMeasuring', function(key) {
     if (!this.pre._starts[key]) {
-      console.warn(`The key: ${key} was not being measured`)
+      server.log(
+        ['instrumental', 'warn'],
+        `The key: ${key} was not being measured`
+      )
       return
     }
     const hrend = process.hrtime(this.pre._starts[key])

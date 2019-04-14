@@ -35,6 +35,18 @@ describe('The Instrumental Plugin', () => {
       })
     ).rejects.toThrow('The Instrumental API key is required')
   })
+
+  it('should register the plugin when no api key is passed but `INSTRUMENTAL_KEY` is an env var', async () => {
+    process.env.INSTRUMENTAL_KEY = 'dfabadteer'
+
+    expect(async () => {
+      await server.register({
+        plugin: require('../index'),
+        options: {},
+      })
+    }).not.toThrow()
+    delete process.env.INSTRUMENTAL_KEY
+  })
   it('should register the plugin with correct details', async () => {
     await server.register({
       plugin: require('../index'),
