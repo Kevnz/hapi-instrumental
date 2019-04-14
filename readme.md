@@ -16,6 +16,14 @@ server.register({
     apiKey: 'jlsdfjklsjf2423432' //instrumental api key
   }
 })
+// register plugin with INSTRUMENTAL_KEY environment variable
+process.env.INSTRUMENTAL_KEY = 'jlsdfjklsjf2423432'
+
+server.register({
+  register: require('hapi-instrumental'),
+  options: {
+  }
+})
 ```
 
 ## Usage
