@@ -6,6 +6,9 @@
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "/src"
+  ],
   "scripts": {
     "lint": "eslint src/ --ext .js",
     "pretest": "npm run lint",
