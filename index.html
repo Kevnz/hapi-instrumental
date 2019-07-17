@@ -38,6 +38,14 @@ server.register({
   <span class="hljs-attr">options</span>: {
     <span class="hljs-attr">apiKey</span>: <span class="hljs-string">'jlsdfjklsjf2423432'</span> <span class="hljs-comment">//instrumental api key</span>
   }
+})
+<span class="hljs-comment">// register plugin with INSTRUMENTAL_KEY environment variable</span>
+process.env.INSTRUMENTAL_KEY = <span class="hljs-string">'jlsdfjklsjf2423432'</span>
+
+server.register({
+  <span class="hljs-attr">register</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'hapi-instrumental'</span>),
+  <span class="hljs-attr">options</span>: {
+  }
 })</code></pre>
 <h2 id="usage-1">Usage</h2>
 <p>In addition to logging responses you can both increment and use the gauge functionality (please see instrumentalapp.com docs) as you would from the agent. The plugin also provides the ability to gauge the time from the start of the request as well as gauging start and stop keys.</p>
