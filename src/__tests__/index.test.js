@@ -1,4 +1,4 @@
-const Hapi = require('hapi')
+const Hapi = require('@hapi/hapi')
 const { delay } = require('@kev_nz/async-tools')
 
 jest.mock('instrumental-agent')
